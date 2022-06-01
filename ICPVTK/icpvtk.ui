@@ -34,8 +34,44 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuBasic">
+    <property name="title">
+     <string>BasicShape</string>
+    </property>
+    <addaction name="actionSphere"/>
+    <addaction name="actionCylinder"/>
+    <addaction name="actionCone"/>
+   </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpen"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuBasic"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionSphere">
+   <property name="text">
+    <string>Sphere</string>
+   </property>
+  </action>
+  <action name="actionCone">
+   <property name="text">
+    <string>Cone</string>
+   </property>
+  </action>
+  <action name="actionCylinder">
+   <property name="text">
+    <string>Cylinder</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

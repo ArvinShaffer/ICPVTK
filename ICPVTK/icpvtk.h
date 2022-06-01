@@ -5,6 +5,8 @@
 #include <QSurfaceFormat>
 #include <QVTKOpenGLNativeWidget.h>
 #include <vtkSphereSource.h>
+#include <vtkConeSource.h>
+#include <vtkCylinderSource.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkActor.h>
 #include <vtkRenderer.h>
@@ -35,5 +37,13 @@ public:
 
 private:
     Ui::ICPVTK *ui;
+    vtkNew<vtkNamedColors> colors;
+    vtkNew<vtkRenderer> renderer;
+    vtkNew<vtkGenericOpenGLRenderWindow> renderWindow;
+
+public slots:
+    void createSphere();
+    void createCone();
+    void createCylinder();
 };
 #endif // ICPVTK_H
