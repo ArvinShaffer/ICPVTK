@@ -6,6 +6,7 @@ ICPVTK::ICPVTK(QWidget *parent)
     , ui(new Ui::ICPVTK)
 {
     ui->setupUi(this);
+    QObject::connect(ui->actionCubic, &QAction::triggered, this, &ICPVTK::createCubic);
     QObject::connect(ui->actionSphere, &QAction::triggered, this, &ICPVTK::createSphere);
     QObject::connect(ui->actionCone, &QAction::triggered, this, &ICPVTK::createCone);
     QObject::connect(ui->actionCylinder, &QAction::triggered, this, &ICPVTK::createCylinder);
@@ -16,6 +17,19 @@ ICPVTK::ICPVTK(QWidget *parent)
     ui->openGLWidget->setRenderWindow(renderWindow);
 }
 
+void ICPVTK::createCubic()
+{
+    vtkNew<vtkCubeSource> cubicSource;
+    vtkNew<vtkPolyDataMapper> cubicMapper;
+    cubicMapper->SetInputConnection(cubicSource->GetOutputPort());
+    vtkNew<vtkActor> cubicActor;
+    cubicActor->SetMapper(cubicMapper);
+    //cubicActor->GetProperty()->SetColor(colors->GetColor3d("SlateGray").GetData());
+    cubicActor->GetProperty()->SetColor(colors->GetColor3d("Yellow").GetData());
+    renderer->AddActor(cubicActor);
+    ui->openGLWidget->update();
+}
+
 void ICPVTK::createSphere()
 {
     vtkNew<vtkSphereSource> sphereSource;
@@ -24,6 +38,7 @@ void ICPVTK::createSphere()
     vtkNew<vtkActor> sphereActor;
     sphereActor->SetMapper(sphereMapper);
     sphereActor->GetProperty()->SetColor(colors->GetColor3d("Tomato").GetData());
+    sphereActor->SetPosition(2,1,1);
     renderer->AddActor(sphereActor);
     ui->openGLWidget->update();
 }

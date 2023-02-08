@@ -38,6 +38,7 @@
     <property name="title">
      <string>BasicShape</string>
     </property>
+    <addaction name="actionCubic"/>
     <addaction name="actionSphere"/>
     <addaction name="actionCylinder"/>
     <addaction name="actionCone"/>
@@ -70,6 +71,11 @@
   <action name="actionOpen">
    <property name="text">
     <string>Open</string>
+   </property>
+  </action>
+  <action name="actionCubic">
+   <property name="text">
+    <string>Cubic</string>
    </property>
   </action>
  </widget>

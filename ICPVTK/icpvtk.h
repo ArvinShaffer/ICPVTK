@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QSurfaceFormat>
 #include <QVTKOpenGLNativeWidget.h>
+#include <vtkCubeSource.h>
 #include <vtkSphereSource.h>
 #include <vtkConeSource.h>
 #include <vtkCylinderSource.h>
@@ -45,5 +46,6 @@ public slots:
     void createSphere();
     void createCone();
     void createCylinder();
+    void createCubic();
 };
 #endif // ICPVTK_H
