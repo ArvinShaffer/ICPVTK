@@ -49,8 +49,16 @@
     </property>
     <addaction name="actionOpen"/>
    </widget>
+   <widget class="QMenu" name="menuExample">
+    <property name="title">
+     <string>Example</string>
+    </property>
+    <addaction name="actionPointPicker"/>
+    <addaction name="actionMovePoint"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuBasic"/>
+   <addaction name="menuExample"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionSphere">
@@ -76,6 +84,16 @@
   <action name="actionCubic">
    <property name="text">
     <string>Cubic</string>
+   </property>
+  </action>
+  <action name="actionPointPicker">
+   <property name="text">
+    <string>PointPicker</string>
+   </property>
+  </action>
+  <action name="actionMovePoint">
+   <property name="text">
+    <string>MovePoint</string>
    </property>
   </action>
  </widget>

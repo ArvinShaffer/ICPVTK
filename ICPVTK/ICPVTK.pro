@@ -21,7 +21,9 @@ LIBS += -L/usr/local/lib  \
   -lvtkRenderingFreeType-9.1 \
   -lvtkRenderingGL2PSOpenGL2-9.1 \
   -lvtkRenderingOpenGL2-9.1 \
-  -lvtkGUISupportQt-9.1
+  -lvtkGUISupportQt-9.1  \
+  -lvtkCommonDataModel-9.1 \
+  -lvtkFiltersCore-9.1
 
 
 SOURCES += \
@@ -29,7 +31,8 @@ SOURCES += \
     icpvtk.cpp
 
 HEADERS += \
-    icpvtk.h
+    icpvtk.h \
+    interact.h
 
 FORMS += \
     icpvtk.ui

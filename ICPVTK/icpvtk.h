@@ -47,5 +47,7 @@ public slots:
     void createCone();
     void createCylinder();
     void createCubic();
+    void pointPicker();
+    void movePoint();
 };
 #endif // ICPVTK_H

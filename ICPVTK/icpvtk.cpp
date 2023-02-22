@@ -1,5 +1,6 @@
 #include "icpvtk.h"
 #include "ui_icpvtk.h"
+#include "interact.h"
 
 ICPVTK::ICPVTK(QWidget *parent)
     : QMainWindow(parent)
@@ -10,6 +11,11 @@ ICPVTK::ICPVTK(QWidget *parent)
     QObject::connect(ui->actionSphere, &QAction::triggered, this, &ICPVTK::createSphere);
     QObject::connect(ui->actionCone, &QAction::triggered, this, &ICPVTK::createCone);
     QObject::connect(ui->actionCylinder, &QAction::triggered, this, &ICPVTK::createCylinder);
+
+
+    QObject::connect(ui->actionPointPicker, &QAction::triggered, this, &ICPVTK::pointPicker);
+    QObject::connect(ui->actionMovePoint, &QAction::triggered, this, &ICPVTK::movePoint);
+
     renderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
     renderWindow->AddRenderer(renderer);
     renderWindow->SetWindowName("ICPVTK");
@@ -74,4 +80,85 @@ ICPVTK::~ICPVTK()
 {
     delete ui;
 }
+
+
+void ICPVTK::pointPicker()
+{
+    vtkNew<vtkSphereSource> sphereSource;
+    sphereSource->Update();
+    vtkNew<vtkPointPicker> pointPicker;
+    // Create a mapper and actor
+    vtkNew<vtkPolyDataMapper> mapper;
+    mapper->SetInputConnection(sphereSource->GetOutputPort());
+    vtkNew<vtkActor> actor;
+    actor->SetMapper(mapper);
+    actor->GetProperty()->SetColor(colors->GetColor3d("MistyRose").GetData());
+
+    // Create a renderer, render window, and interactor
+    renderWindow->AddRenderer(renderer);
+    renderWindow->SetWindowName("PointPicker");
+    this->ui->openGLWidget->interactor()->SetPicker(pointPicker);
+    this->ui->openGLWidget->interactor()->SetRenderWindow(renderWindow);
+    vtkNew<MouseInteractorStylePP> style;
+    this->ui->openGLWidget->interactor()->SetInteractorStyle(style);
+    // Add the actor to the scene
+    renderer->AddActor(actor);
+    renderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
+    this->ui->openGLWidget->update();
+    this->ui->openGLWidget->interactor()->Start();
+}
+
+
+void ICPVTK::movePoint()
+{
+    vtkNew<vtkPoints> points;
+    points->InsertNextPoint(0, 0, 0);
+    points->InsertNextPoint(0.1, 0, 0);
+    points->InsertNextPoint(0.2, 0, 0);
+
+    vtkNew<vtkPolyData> input;
+    input->SetPoints(points);
+
+    vtkNew<vtkSphereSource> glyphSource;
+    glyphSource->SetRadius(0.01);
+    glyphSource->Update();
+    vtkNew<vtkGlyph3D> glyph3D;
+    glyph3D->GeneratePointIdsOn();
+    glyph3D->SetSourceConnection(glyphSource->GetOutputPort());
+    glyph3D->SetInputData(input);
+    glyph3D->SetScaleModeToDataScalingOff();
+    glyph3D->Update();
+
+    // Create a mapper and actor
+    vtkNew<vtkPolyDataMapper> mapper;
+    mapper->SetInputConnection(glyph3D->GetOutputPort());
+
+    vtkNew<vtkActor> actor;
+    actor->SetMapper(mapper);
+    actor->GetProperty()->SetColor(colors->GetColor3d("Tomato").GetData());
+
+    renderer->AddActor(actor);
+    vtkNew<InteractorStyleMoveGlyph> style;
+    this->ui->openGLWidget->interactor()->SetRenderWindow(renderWindow);
+    this->ui->openGLWidget->interactor()->SetInteractorStyle(style);
+    style->Data = input;
+    style->GlyphData = glyph3D->GetOutput();
+
+    renderer->GetActiveCamera()->Zoom(0.9);
+
+    this->ui->openGLWidget->update();
+    this->ui->openGLWidget->interactor()->Start();
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
